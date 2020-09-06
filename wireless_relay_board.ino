@@ -22,23 +22,34 @@ Relay firstRelay{firstRelayPin};
 Relay secondRelay{secondRelayPin};
 
 void setup() {
+  Serial.begin(9600);
   setupLoRa();
 }
 
 void loop() {
-  if (!firstRelay.isTurnedOn()){
-    firstRelay.turnOn();
-  }
-
-  if (!secondRelay.isTurnedOn()){
-    secondRelay.turnOn();
-  }
-  
   if (isTxDue()){
     sendPacket();
   }
   
   if (LoRa.parsePacket()){
+    int packet{LoRa.read()};
+    bool isFirstRelayTurnedOn{packet & (1 << 1)};
+    bool isSecondRelayTurnedOn{packet & 1};
+
+    if (isFirstRelayTurnedOn){
+      firstRelay.turnOn();
+    }
+    else{
+      firstRelay.turnOff();
+    }
+
+    if (isSecondRelayTurnedOn){
+      secondRelay.turnOn();
+    }
+    else{
+      secondRelay.turnOff();
+    }
+
     rxLED.blink();
   }
 
