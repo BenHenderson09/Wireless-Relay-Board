@@ -7,7 +7,7 @@ Radio radio;
 
 // LEDs
 const int txLEDPin{3};
-const int rxLEDPin{4};
+const int rxLEDPin{5};
 unsigned long timeOfPreviousTxInMilliseconds;
 const int intervalBetweenTxInMilliseconds{1000};
 
@@ -15,8 +15,8 @@ BlinkableLED rxLED{rxLEDPin};
 BlinkableLED txLED{txLEDPin};
 
 // Relays
-const int firstRelayPin{5};
-const int secondRelayPin{6};
+const int firstRelayPin{6};
+const int secondRelayPin{7};
 
 Relay firstRelay{firstRelayPin};
 Relay secondRelay{secondRelayPin};
@@ -27,9 +27,7 @@ void setup(){
 
 void loop(){
   if (isTxDue()){
-    radio.sendByte(serializeRelayStates());
-    txLED.blink();
-    timeOfPreviousTxInMilliseconds = millis();
+    txRelayStates();
   }
   
   radio.receiveByte(&receiveByteCallback);
@@ -40,6 +38,12 @@ void loop(){
 
 bool isTxDue(){
   return millis() - timeOfPreviousTxInMilliseconds >= intervalBetweenTxInMilliseconds;
+}
+
+void txRelayStates(){
+  radio.sendByte(serializeRelayStates());
+  txLED.blink();
+  timeOfPreviousTxInMilliseconds = millis();
 }
 
 uint8_t serializeRelayStates(){
@@ -55,4 +59,12 @@ void receiveByteCallback(uint8_t byte){
   shouldSecondRelayBeTurnedOn ? secondRelay.turnOn() : secondRelay.turnOff();
 
   rxLED.blink();
+  
+  // Transmit a signal as soon as possible after receiving. This gives a response
+  // almost immediately to the controller device.
+  makeTxDue();
+}
+
+void makeTxDue(){
+  timeOfPreviousTxInMilliseconds = 0;
 }

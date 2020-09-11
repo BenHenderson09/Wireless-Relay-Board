@@ -9,7 +9,8 @@ class Relay {
         void turnOn();
         void turnOff();
 
-    private:
+    private: 
+        // Relays on the board are activated with a LOW signal, deactivated with HIGH
         const int ON_STATE{LOW};
         const int OFF_STATE{HIGH};
         const int pin;
