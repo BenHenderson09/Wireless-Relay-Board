@@ -1,12 +1,13 @@
 #include <LoRa.h>
 #include "Radio.hpp"
+#include "../../constants/RadioConstants.hpp"
 
 void Radio::init(){
-    if (!LoRa.begin(radioFrequency)) {
+    if (!LoRa.begin(RadioConstants::radioFrequency)) {
         while (1);
     }
 
-    LoRa.setTxPower(15);
+    LoRa.setTxPower(RadioConstants::txPower);
 }
 
 void Radio::sendByte(uint8_t byte){

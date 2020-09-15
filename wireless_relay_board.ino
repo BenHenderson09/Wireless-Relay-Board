@@ -1,25 +1,20 @@
 #include "src/BlinkableLED/BlinkableLED.hpp"
 #include "src/Relay/Relay.hpp"
 #include "src/Radio/Radio.hpp"
+#include "constants/PinConstants.hpp"
 
 // Radio
 Radio radio;
-
-// LEDs
-const int txLEDPin{3};
-const int rxLEDPin{5};
 unsigned long timeOfPreviousTxInMilliseconds;
 const int intervalBetweenTxInMilliseconds{1000};
 
-BlinkableLED rxLED{rxLEDPin};
-BlinkableLED txLED{txLEDPin};
+// LEDs
+BlinkableLED rxLED{PinConstants::rxLEDPin};
+BlinkableLED txLED{PinConstants::txLEDPin};
 
 // Relays
-const int firstRelayPin{6};
-const int secondRelayPin{7};
-
-Relay firstRelay{firstRelayPin};
-Relay secondRelay{secondRelayPin};
+Relay firstRelay{PinConstants::firstRelayPin};
+Relay secondRelay{PinConstants::secondRelayPin};
 
 void setup(){
   radio.init();
