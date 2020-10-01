@@ -13,7 +13,7 @@ void Radio::init(){
 void Radio::sendByte(uint8_t byte){
     LoRa.beginPacket();
     LoRa.write(byte);
-    LoRa.endPacket(true);
+    LoRa.endPacket();
 }
 
 void Radio::receiveByte(void(*receiveByteCallback)(uint8_t)){

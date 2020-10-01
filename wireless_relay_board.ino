@@ -6,7 +6,7 @@
 // Radio
 Radio radio;
 unsigned long timeOfPreviousTxInMilliseconds;
-const int intervalBetweenTxInMilliseconds{1000};
+const int intervalBetweenTxInMilliseconds{2000};
 
 // LEDs
 BlinkableLED rxLED{PinConstants::rxLEDPin};
