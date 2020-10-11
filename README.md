@@ -10,5 +10,5 @@ The relays act in accordance to instructions wirelessly received from a controll
 from the controller.
 - An Arduino Uno works with the LoRa module to manage communications with the controller. The Arduino
 will also control a dual relay module which is wired into the sockets.
-- Makes use of RC snubbers
+- Makes use of RC snubbers, decoupling capacitors and watchdog timers for reliability in noisy conditions
 - AC/DC adapter circuit converts mains to 12VDC for the Arduino
