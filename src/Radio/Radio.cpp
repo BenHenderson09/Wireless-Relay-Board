@@ -6,8 +6,6 @@ void Radio::init(){
     if (!LoRa.begin(RadioConstants::radioFrequency)) {
         while (1);
     }
-
-    LoRa.setTxPower(RadioConstants::txPower);
 }
 
 void Radio::sendByte(uint8_t byte){

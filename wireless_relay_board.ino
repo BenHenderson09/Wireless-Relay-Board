@@ -1,3 +1,4 @@
+#include <avr/wdt.h>
 #include "src/BlinkableLED/BlinkableLED.hpp"
 #include "src/Relay/Relay.hpp"
 #include "src/Radio/Radio.hpp"
@@ -17,10 +18,13 @@ Relay firstRelay{PinConstants::firstRelayPin};
 Relay secondRelay{PinConstants::secondRelayPin};
 
 void setup(){
+  wdt_enable(WDTO_2S);
   radio.init();
 }
 
 void loop(){
+  wdt_reset();
+
   if (isTxDue()){
     txRelayStates();
   }
